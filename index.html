@@ -24,7 +24,7 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 .cover{position:relative;height:100vh;overflow:hidden;background:var(--ink)}
 .cover-layer{position:absolute;inset:0}
 .cover-layer img{width:100%;height:100%;object-fit:cover;object-position:center 38%}
-.cover-sketch img{filter:grayscale(1) contrast(1.35) brightness(.8);transform:scale(1.05)}
+.cover-sketch img{opacity:.94}
 .cover-color{clip-path:inset(0 100% 0 0);animation:reveal 2.6s 1s cubic-bezier(.7,0,.2,1) forwards}
 @keyframes reveal{to{clip-path:inset(0 0 0 0)}}
 .cover-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(31,43,42,.45),rgba(31,43,42,.3) 50%,rgba(31,43,42,.6))}
@@ -32,10 +32,10 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 .cover-kicker{font-family:var(--sans);font-size:.8rem;letter-spacing:.55em;color:rgba(244,240,231,.7);margin-bottom:1.5rem;opacity:0;animation:rise 1s .4s forwards}
 .cover-title{font-size:clamp(2rem,5.4vw,4rem);font-weight:600;color:#F7F3EA;letter-spacing:.14em;line-height:1.35;opacity:0;animation:rise 1.2s 1.2s forwards}
 .cover-sub{margin-top:1rem;font-family:var(--sans);font-size:clamp(.8rem,1.3vw,1rem);color:rgba(244,240,231,.85);letter-spacing:.3em;opacity:0;animation:rise 1.2s 1.6s forwards}
-.cover-enter{display:inline-block;margin-top:2.8rem;padding:.8rem 3rem;border:1px solid rgba(247,243,234,.85);color:#F7F3EA;text-decoration:none;letter-spacing:.35em;font-size:.9rem;font-family:var(--sans);opacity:0;animation:rise 1s 2s forwards,breath 4s 3.5s infinite;transition:background .3s,color .3s}
+.cover-enter{display:inline-block;margin-top:2.8rem;padding:.8rem 3rem;border:1px solid rgba(247,243,234,.85);color:#F7F3EA;text-decoration:none;letter-spacing:.35em;font-size:.9rem;font-family:var(--sans);opacity:0;animation:rise 1s 2s forwards;transition:background .3s,color .3s}
 .cover-enter:hover{background:rgba(247,243,234,.94);color:var(--ink)}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes breath{0%,100%{box-shadow:0 0 0 0 rgba(247,243,234,0)}50%{box-shadow:0 0 22px 3px rgba(247,243,234,.18)}}
+/* 已移除循环阴影动画：每帧重绘 box-shadow，是持续耗电/掉帧的来源 */
 .cover-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(244,240,231,.55);font-size:.7rem;letter-spacing:.4em;font-family:var(--sans);opacity:0;animation:rise 1s 2.4s forwards;z-index:3}
 
 /* ===== 地图导航区 ===== */
@@ -45,8 +45,8 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 .map-right{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .map-progress .stat{font-family:var(--sans);font-size:.85rem;color:var(--accent-1);letter-spacing:.1em}
 .map-progress .stat b{font-size:1.15rem;margin:0 .2rem}
-.map-wrap{position:relative;max-width:1100px;margin:0 auto;border:1px solid var(--line);box-shadow:0 8px 30px rgba(47,59,58,.12);background:#e8e2d4}
-.map-wrap>img{display:block;width:100%;height:auto;filter:saturate(.48) contrast(.94) brightness(1.05)}
+.map-wrap{position:relative;max-width:1100px;margin:0 auto;border:1px solid var(--line);box-shadow:0 4px 16px rgba(47,59,58,.10);background:#e8e2d4}
+.map-wrap>img{display:block;width:100%;height:auto}
 .point{position:absolute;transform:translate(-50%,-50%);background:none;border:none;cursor:pointer;padding:0}
 .dot{display:block;width:16px;height:16px;border-radius:50%;border:2px solid #fff;background:transparent;box-shadow:0 0 0 2px rgba(47,59,58,.35);transition:all .3s}
 .point:hover .dot{transform:scale(1.5)}
@@ -80,14 +80,14 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 .tree-level-2{display:flex;align-items:center;gap:.7rem;padding:.7rem .4rem;cursor:pointer;font-size:1.05rem;font-weight:600;border-bottom:1px solid var(--line)}
 .tree-level-2 .tick{flex:none;width:1.25rem;height:1.25rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink);font-family:var(--sans);font-size:.8rem;transition:background .25s}
 .tree-level-2.open .tick{background:var(--ink);color:var(--paper)}
-.branch-3{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s;margin-left:.55rem;border-left:1px solid var(--line)}
+.branch-3{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s;margin-left:.55rem;border-left:1px solid var(--line)}
 .branch-3.open{grid-template-rows:1fr}
 .branch-3>.branch-inner{overflow:hidden;min-height:0}
 .tree-level-3{display:flex;align-items:center;gap:.6rem;padding:.5rem .9rem;cursor:pointer;font-size:.95rem}
 .tree-level-3:hover{color:var(--accent-1)}
 .tree-level-3 .tick3{flex:none;width:1rem;height:1rem;border-radius:50%;border:1px solid var(--accent-2);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.65rem;color:var(--accent-2);transition:background .3s,transform .35s}
 .tree-level-3.open .tick3{background:var(--accent-2);color:#fff;transform:rotate(135deg)}
-.branch-4{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s;margin-left:1.1rem;border-left:1px dashed var(--line)}
+.branch-4{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s;margin-left:1.1rem;border-left:1px dashed var(--line)}
 .branch-4.open{grid-template-rows:1fr}
 .branch-4>.branch-inner{overflow:hidden;min-height:0}
 .tree-level-4{padding:.42rem 1.2rem;cursor:pointer;font-size:.88rem;color:#4a4a42;position:relative;transition:background .2s}
@@ -98,7 +98,7 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 /* ===== 抽屉 ===== */
 .overlay{position:fixed;inset:0;z-index:50;background:rgba(31,43,42,.28);opacity:0;pointer-events:none;transition:opacity .4s}
 .overlay.show{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;bottom:0;z-index:60;width:min(880px,96vw);background:var(--paper-2);box-shadow:-6px 0 32px rgba(31,43,42,.14);transform:translateX(105%);transition:transform .5s;display:flex;flex-direction:column}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:60;width:min(880px,96vw);background:var(--paper-2);box-shadow:-4px 0 18px rgba(31,43,42,.12);transform:translateX(105%);transition:transform .5s;display:flex;flex-direction:column}
 .drawer.open{transform:translateX(0)}
 .drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.3rem 1.5rem .9rem;border-bottom:1px solid var(--line)}
 .drawer-title{font-size:1.08rem;font-weight:600;line-height:1.5}
@@ -155,8 +155,8 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 
 <!-- ===== 封面 ===== -->
 <section class="cover">
-  <div class="cover-layer cover-sketch"><img src="assets/cover-plaque.png" alt=""></div>
-  <div class="cover-layer cover-color"><img src="assets/cover-plaque.png" alt="黄鹿井村牌楼"></div>
+  <div class="cover-layer cover-sketch"><img src="assets/cover-plaque-mono.jpg" alt=""></div>
+  <div class="cover-layer cover-color"><img src="assets/cover-plaque.jpg" alt="黄鹿井村牌楼" fetchpriority="high"></div>
   <div class="cover-veil"></div>
   <div class="cover-inner">
     <div class="cover-kicker">TRADITIONAL VILLAGE · CULTURAL GENE</div>
@@ -177,7 +177,7 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
     </div>
   </div>
   <div class="map-wrap" id="mapWrap">
-    <img src="assets/village-map.png" alt="黄鹿井村村落航拍几何图">
+    <img src="assets/village-map.jpg" alt="黄鹿井村村落航拍几何图" loading="lazy" decoding="async">
     <div class="map-pop" id="mapPop"><div class="map-pop-head"><span id="popTitle"></span><button id="popClose" type="button">×</button></div><div class="map-pop-list" id="popList"></div></div>
   </div>
   <div class="map-legend">
@@ -384,7 +384,7 @@ function openDrawer(key){
     var grid=document.createElement('div');grid.className='img-grid';
     d.imgs.forEach(function(p,i){
       var card=document.createElement('div');card.className='img-card';
-      var im=document.createElement('img');im.className='thumb';im.loading='lazy';im.src=p;im.alt=fname(p);
+      var im=document.createElement('img');im.className='thumb';im.loading='lazy';im.decoding='async';im.src=p;im.alt=fname(p);
       var fn=document.createElement('div');fn.className='fname';fn.textContent=fname(p);
       card.appendChild(im);card.appendChild(fn);
       card.addEventListener('click',function(){openLb(i);});
