@@ -384,7 +384,7 @@ function openDrawer(key){
     var grid=document.createElement('div');grid.className='img-grid';
     d.imgs.forEach(function(p,i){
       var card=document.createElement('div');card.className='img-card';
-      var im=document.createElement('img');im.className='thumb';im.loading='lazy';im.decoding='async';im.src=p;im.alt=fname(p);
+      var im=document.createElement('img');im.className='thumb';im.loading='lazy';im.decoding='async';im.src=p.replace(/\.(jpg|jpeg|png)$/i,'_t.jpg');im.alt=fname(p);im.onerror=function(){this.onerror=null;this.src=p;};
       var fn=document.createElement('div');fn.className='fname';fn.textContent=fname(p);
       card.appendChild(im);card.appendChild(fn);
       card.addEventListener('click',function(){openLb(i);});
