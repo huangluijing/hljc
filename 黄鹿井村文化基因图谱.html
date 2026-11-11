@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>青州黄鹿井村传统村落文化基因图谱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23335A66'/%3E%3Ctext x='32' y='42' font-size='26' font-family='serif' fill='%23F4F0E7' text-anchor='middle'%3E%E9%BB%84%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="preconnect" href="https://sf3-scmcdn-cn.feishucdn.com" crossorigin>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F4F0E7; --paper-2:#ECE5D6; --ink:#2F3B3A; --muted:#6E6A60;
+  --line:#D6CFC1; --accent-1:#335A66; --accent-2:#ADBA96;
+  --accent-3:#B5A2BC; --accent-4:#B28282; --brick:#B14E53;
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-height:1.75;overflow-x:hidden}
+
+/* ===== 封面：线稿→彩色显影 ===== */
+.cover{position:relative;height:100vh;overflow:hidden;background:var(--ink)}
+.cover-layer{position:absolute;inset:0}
+.cover-layer img{width:100%;height:100%;object-fit:cover;object-position:center 38%}
+.cover-sketch img{filter:grayscale(1) contrast(1.35) brightness(.8);transform:scale(1.05)}
+.cover-color{clip-path:inset(0 100% 0 0);animation:reveal 2.6s 1s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes reveal{to{clip-path:inset(0 0 0 0)}}
+.cover-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(31,43,42,.45),rgba(31,43,42,.3) 50%,rgba(31,43,42,.6))}
+.cover-inner{position:relative;z-index:3;text-align:center;padding:0 6vw;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cover-kicker{font-family:var(--sans);font-size:.8rem;letter-spacing:.55em;color:rgba(244,240,231,.7);margin-bottom:1.5rem;opacity:0;animation:rise 1s .4s forwards}
+.cover-title{font-size:clamp(2rem,5.4vw,4rem);font-weight:600;color:#F7F3EA;letter-spacing:.14em;line-height:1.35;opacity:0;animation:rise 1.2s 1.2s forwards}
+.cover-sub{margin-top:1rem;font-family:var(--sans);font-size:clamp(.8rem,1.3vw,1rem);color:rgba(244,240,231,.85);letter-spacing:.3em;opacity:0;animation:rise 1.2s 1.6s forwards}
+.cover-enter{display:inline-block;margin-top:2.8rem;padding:.8rem 3rem;border:1px solid rgba(247,243,234,.85);color:#F7F3EA;text-decoration:none;letter-spacing:.35em;font-size:.9rem;font-family:var(--sans);opacity:0;animation:rise 1s 2s forwards,breath 4s 3.5s infinite;transition:background .3s,color .3s}
+.cover-enter:hover{background:rgba(247,243,234,.94);color:var(--ink)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes breath{0%,100%{box-shadow:0 0 0 0 rgba(247,243,234,0)}50%{box-shadow:0 0 22px 3px rgba(247,243,234,.18)}}
+.cover-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(244,240,231,.55);font-size:.7rem;letter-spacing:.4em;font-family:var(--sans);opacity:0;animation:rise 1s 2.4s forwards;z-index:3}
+
+/* ===== 地图导航区 ===== */
+.map-section{position:relative;min-height:100vh;background:var(--paper);padding:4rem 1.5rem 5rem}
+.map-progress{max-width:1100px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.map-progress h2{font-size:1.3rem;font-weight:600;letter-spacing:.08em}
+.map-right{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.map-progress .stat{font-family:var(--sans);font-size:.85rem;color:var(--accent-1);letter-spacing:.1em}
+.map-progress .stat b{font-size:1.15rem;margin:0 .2rem}
+.map-wrap{position:relative;max-width:1100px;margin:0 auto;border:1px solid var(--line);box-shadow:0 8px 30px rgba(47,59,58,.12);background:#e8e2d4}
+.map-wrap>img{display:block;width:100%;height:auto;filter:saturate(.48) contrast(.94) brightness(1.05)}
+.point{position:absolute;transform:translate(-50%,-50%);background:none;border:none;cursor:pointer;padding:0}
+.dot{display:block;width:16px;height:16px;border-radius:50%;border:2px solid #fff;background:transparent;box-shadow:0 0 0 2px rgba(47,59,58,.35);transition:all .3s}
+.point:hover .dot{transform:scale(1.5)}
+.point.unlocked .dot{background:var(--accent-2);border-color:var(--accent-2);box-shadow:0 0 0 5px rgba(173,186,150,.35)}
+.point.done .dot{background:var(--brick);border-color:var(--brick);box-shadow:0 0 0 5px rgba(177,78,83,.3)}
+.point .label{position:absolute;left:50%;top:20px;transform:translateX(-50%);white-space:nowrap;font-family:var(--sans);font-size:.68rem;line-height:1.5;color:var(--ink);background:rgba(244,240,231,.95);padding:.02rem .4rem;border:1px solid rgba(47,59,58,.3);pointer-events:none;transition:background .2s,border-color .2s}
+.point:hover .label,.point.active .label{background:#fff;border-color:var(--accent-1)}
+.point.lb-up .label{top:auto;bottom:20px}
+.map-legend{max-width:1100px;margin:1rem auto 0;font-family:var(--sans);font-size:.75rem;color:var(--muted);display:flex;gap:1.5rem;flex-wrap:wrap}
+.map-legend span{display:inline-flex;align-items:center;gap:.4rem}
+.map-legend i{width:11px;height:11px;border-radius:50%;display:inline-block}
+
+/* 点位浮层 */
+.map-pop{position:absolute;z-index:20;width:min(300px,80%);background:var(--paper-2);border:1px solid var(--ink);box-shadow:0 10px 36px rgba(31,43,42,.25);display:none}
+.map-pop.show{display:block}
+.map-pop-head{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem;border-bottom:1px solid var(--line);font-weight:600}
+.map-pop-head button{background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--muted)}
+.map-pop-list{padding:.5rem}
+.map-pop-item{display:block;width:100%;text-align:left;padding:.55rem .8rem;background:none;border:none;border-bottom:1px dashed var(--line);cursor:pointer;font-family:var(--serif);font-size:.88rem;color:var(--ink);transition:background .2s}
+.map-pop-item:hover{background:rgba(51,90,102,.08)}
+.map-pop-item .cnt{float:right;font-family:var(--sans);font-size:.68rem;color:var(--accent-1)}
+.map-pop-item.seen{color:var(--accent-2)}
+
+/* ===== 树形目录区 ===== */
+.tree-section{max-width:1060px;margin:0 auto;padding:3rem 1.5rem 4rem}
+.tree-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:1rem;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}
+.tree-head h3{font-size:1.15rem;font-weight:600}
+.tree-head small{font-family:var(--sans);font-size:.75rem;color:var(--muted);letter-spacing:.1em}
+.btn-ghost{font-family:var(--sans);font-size:.78rem;letter-spacing:.1em;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.4rem 1rem;cursor:pointer}
+.btn-ghost:hover{border-color:var(--accent-1);background:rgba(51,90,102,.06)}
+.tree-level-2{display:flex;align-items:center;gap:.7rem;padding:.7rem .4rem;cursor:pointer;font-size:1.05rem;font-weight:600;border-bottom:1px solid var(--line)}
+.tree-level-2 .tick{flex:none;width:1.25rem;height:1.25rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink);font-family:var(--sans);font-size:.8rem;transition:background .25s}
+.tree-level-2.open .tick{background:var(--ink);color:var(--paper)}
+.branch-3{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s;margin-left:.55rem;border-left:1px solid var(--line)}
+.branch-3.open{grid-template-rows:1fr}
+.branch-3>.branch-inner{overflow:hidden;min-height:0}
+.tree-level-3{display:flex;align-items:center;gap:.6rem;padding:.5rem .9rem;cursor:pointer;font-size:.95rem}
+.tree-level-3:hover{color:var(--accent-1)}
+.tree-level-3 .tick3{flex:none;width:1rem;height:1rem;border-radius:50%;border:1px solid var(--accent-2);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.65rem;color:var(--accent-2);transition:background .3s,transform .35s}
+.tree-level-3.open .tick3{background:var(--accent-2);color:#fff;transform:rotate(135deg)}
+.branch-4{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s;margin-left:1.1rem;border-left:1px dashed var(--line)}
+.branch-4.open{grid-template-rows:1fr}
+.branch-4>.branch-inner{overflow:hidden;min-height:0}
+.tree-level-4{padding:.42rem 1.2rem;cursor:pointer;font-size:.88rem;color:#4a4a42;position:relative;transition:background .2s}
+.tree-level-4::before{content:"";position:absolute;left:.15rem;top:50%;transform:translateY(-50%);width:.4rem;height:.4rem;background:var(--accent-4);opacity:.7}
+.tree-level-4:hover{color:var(--accent-1);background:rgba(51,90,102,.05)}
+.tree-level-4 .cnt{margin-left:.4rem;font-family:var(--sans);font-size:.66rem;color:var(--accent-1);border:1px solid var(--accent-2);padding:0 .35rem;border-radius:8px}
+
+/* ===== 抽屉 ===== */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(31,43,42,.28);opacity:0;pointer-events:none;transition:opacity .4s}
+.overlay.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:60;width:min(880px,96vw);background:var(--paper-2);box-shadow:-6px 0 32px rgba(31,43,42,.14);transform:translateX(105%);transition:transform .5s;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.3rem 1.5rem .9rem;border-bottom:1px solid var(--line)}
+.drawer-title{font-size:1.08rem;font-weight:600;line-height:1.5}
+.drawer-close{flex:none;width:2.1rem;height:2.1rem;border:1px solid var(--line);background:none;cursor:pointer;font-size:1.1rem}
+.drawer-body{flex:1;overflow-y:auto;padding:1.2rem 1.5rem 2rem}
+.drawer-section-label{font-family:var(--sans);font-size:.72rem;letter-spacing:.3em;color:var(--muted);margin:1.1rem 0 .6rem}
+.drawer-count{font-family:var(--sans);font-size:.78rem;color:var(--accent-1);margin-bottom:.8rem}
+.img-grid{display:grid;grid-template-columns:1fr;gap:.9rem}
+.img-card{background:rgba(255,255,255,.55);border:1px solid var(--line);overflow:hidden;cursor:pointer;transition:border-color .25s}
+.img-card:hover{border-color:var(--accent-1)}
+.img-card .thumb{width:100%;height:auto;display:block;background:#e8e2d4}
+.img-card .fname{font-family:var(--sans);font-size:.66rem;color:var(--muted);padding:.35rem .5rem;word-break:break-all}
+.vid-card{background:rgba(255,255,255,.55);border:1px solid var(--line);margin-bottom:.7rem}
+.vid-card video{width:100%;display:block;background:#000;max-height:280px}
+.vid-card .fname{font-family:var(--sans);font-size:.68rem;color:var(--muted);padding:.4rem .6rem;word-break:break-all}
+.doc-card{display:flex;align-items:center;gap:.8rem;padding:.65rem .9rem;background:rgba(255,255,255,.55);border:1px solid var(--line);margin-bottom:.5rem;text-decoration:none;color:inherit;transition:border-color .25s}
+.doc-card:hover{border-color:var(--accent-1)}
+.doc-type{flex:none;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.58rem;font-weight:600;color:#fff}
+.doc-type.pdf{background:#B14E53}.doc-type.docx{background:#335A66}.doc-type.xlsx{background:#7a8a5a}
+.doc-name{font-family:var(--sans);font-size:.76rem;word-break:break-all}
+.doc-hint{font-family:var(--sans);font-size:.66rem;color:var(--muted);margin-top:.15rem}
+.doc-preview{margin:.3rem 0 1rem;border:1px solid var(--line);background:rgba(255,255,255,.6);max-height:320px;overflow:auto}
+.doc-preview table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:.7rem}
+.doc-preview td{border:1px solid #d6cfc1;padding:.22rem .4rem;word-break:break-word}
+.doc-preview tr:nth-child(even) td{background:rgba(244,240,231,.5)}
+.doc-preview .sheet-name{font-family:var(--sans);font-size:.7rem;padding:.3rem .5rem;background:#e8e2d4;position:sticky;top:0;font-weight:500}
+.doc-preview .docx-p{font-family:var(--sans);font-size:.8rem;padding:.3rem .6rem;line-height:1.7}
+.img-empty{font-family:var(--sans);font-size:.85rem;color:#a29b8c;padding:1.2rem;border:1px dashed var(--line);text-align:center}
+.toast{position:fixed;left:50%;bottom:2rem;transform:translateX(-50%) translateY(20px);z-index:100;background:#2F3B3A;color:#F4F0E7;font-family:var(--sans);font-size:.8rem;padding:.8rem 1.3rem;max-width:90vw;line-height:1.6;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(20,28,27,.94);display:none;align-items:center;justify-content:center;flex-direction:column;padding:2rem}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:80vh;object-fit:contain;background:#fff}
+.lightbox-cap{color:#e8e2d4;font-family:var(--sans);font-size:.8rem;margin-top:.8rem}
+.lb-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff;width:2.4rem;height:2.4rem;cursor:pointer}
+.lb-prev{left:1rem}.lb-next{right:1rem}
+.lb-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff;width:2.4rem;height:2.4rem;cursor:pointer}
+@media (max-width:640px){
+  .map-section{padding:2.5rem 1rem 3rem}
+  .point .label{font-size:.58rem;padding:0 .28rem}
+  .dot{width:13px;height:13px}
+  .img-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .cover-color{clip-path:none}
+  .cover-inner>*{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 封面 ===== -->
+<section class="cover">
+  <div class="cover-layer cover-sketch"><img src="assets/cover-plaque.png" alt=""></div>
+  <div class="cover-layer cover-color"><img src="assets/cover-plaque.png" alt="黄鹿井村牌楼"></div>
+  <div class="cover-veil"></div>
+  <div class="cover-inner">
+    <div class="cover-kicker">TRADITIONAL VILLAGE · CULTURAL GENE</div>
+    <h1 class="cover-title">青州黄鹿井村<br>传统村落文化基因图谱</h1>
+    <p class="cover-sub">山地古村落空间与乡土文化数字档案</p>
+    <a class="cover-enter" href="#map">进入图谱</a>
+  </div>
+  <div class="cover-hint">向下探索 · EXPLORE</div>
+</section>
+
+<!-- ===== 地图导航 ===== -->
+<section class="map-section" id="map">
+  <div class="map-progress">
+    <h2>村落基因地图</h2>
+    <div class="map-right">
+      <div class="stat">已解锁 <b id="unlockedCount">0</b> / <span id="totalCount">0</span> 个基因条目</div>
+      <button class="btn-ghost" id="resetProgress" type="button">重置进度</button>
+    </div>
+  </div>
+  <div class="map-wrap" id="mapWrap">
+    <img src="assets/village-map.png" alt="黄鹿井村村落航拍几何图">
+    <div class="map-pop" id="mapPop"><div class="map-pop-head"><span id="popTitle"></span><button id="popClose" type="button">×</button></div><div class="map-pop-list" id="popList"></div></div>
+  </div>
+  <div class="map-legend">
+    <span><i style="border:2px solid #888;background:transparent"></i> 未探索</span>
+    <span><i style="background:#ADBA96"></i> 已查看</span>
+    <span><i style="background:#B14E53"></i> 该类已全部解锁</span>
+  </div>
+</section>
+
+<!-- ===== 完整目录（树形） ===== -->
+<section class="tree-section">
+  <div class="tree-head">
+    <h3>完整目录</h3>
+    <button class="btn-ghost" id="collapseAll" type="button">一键收起</button>
+  </div>
+  <div id="tree"></div>
+  <p style="margin-top:2rem;font-family:var(--sans);font-size:.75rem;color:var(--muted);letter-spacing:.05em">注：图片点击放大，视频内嵌播放，PDF 新窗口打开，Excel / Word 自动转为网页表格预览；.tif / .heic 已自动跳过。解锁进度保存在本地浏览器。</p>
+</section>
+
+<div class="overlay" id="overlay"></div>
+<div class="toast" id="toast"></div>
+
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head"><h3 class="drawer-title" id="drawerTitle"></h3><button class="drawer-close" id="drawerClose" type="button">×</button></div>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" type="button">×</button>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-btn lb-next" id="lbNext" type="button">›</button>
+  <div class="lightbox-cap" id="lbCap"></div>
+</div>
+
+<script>
+var DATA = {"地貌类型": {"imgs": ["筛选核心文化基因(1)/自然基地基因/地形地貌基因/地貌类型/横向对比图1.jpg", "筛选核心文化基因(1)/自然基地基因/地形地貌基因/地貌类型/空间序列分析二.jpg", "筛选核心文化基因(1)/自然基地基因/地形地貌基因/地貌类型/青州市黄鹿井村空间序列分析.jpg", "筛选核心文化基因(1)/自然基地基因/地形地貌基因/地貌类型/高程图.jpg", "筛选核心文化基因(1)/自然基地基因/地形地貌基因/地貌类型/黄鹿井村新村旧村分析图.jpg"], "vids": [], "docs": []}, "等高关系": {"imgs": ["筛选核心文化基因(1)/自然基地基因/地形地貌基因/等高关系/东西向剖面分析.jpg", "筛选核心文化基因(1)/自然基地基因/地形地貌基因/等高关系/南北向剖面分析.jpg", "筛选核心文化基因(1)/自然基地基因/地形地貌基因/等高关系/地形等高线分析.jpg"], "vids": [], "docs": []}, "水源类型": {"imgs": ["筛选核心文化基因(1)/自然基地基因/水文水系基因/水源类型/黄鹿井村水源村落分布.jpg"], "vids": [], "docs": []}, "水系耦合": {"imgs": ["筛选核心文化基因(1)/自然基地基因/水文水系基因/水系格局与村落/耦合分析.jpg"], "vids": [], "docs": []}, "气候": {"imgs": ["筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/天气分布.png", "筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/平均气温走势.png", "筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/日照分析.png", "筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/植被分布.png", "筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/近3年气温走势.jpg", "筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/近五年平均气温.png", "筛选核心文化基因(1)/自然基地基因/气候植被基因/气候/风向玫瑰.png"], "vids": [], "docs": []}, "植被": {"imgs": ["筛选核心文化基因(1)/自然基地基因/气候植被基因/植被/作物生长周期.png", "筛选核心文化基因(1)/自然基地基因/气候植被基因/植被/黄鹿井村作物古树登记表_作物古树登记表.jpg"], "vids": [], "docs": []}, "地层岩性": {"imgs": ["筛选核心文化基因(1)/自然基地基因/地质土壤基因/地层岩性/地质剖面图.jpg", "筛选核心文化基因(1)/自然基地基因/地质土壤基因/地层岩性/潍坊市名村.jpg"], "vids": [], "docs": []}, "土壤条件": {"imgs": ["筛选核心文化基因(1)/自然基地基因/地质土壤基因/土壤条件/土地利用分析图.jpg", "筛选核心文化基因(1)/自然基地基因/地质土壤基因/土壤条件/地形剖面图和山体土壤分析图.jpg", "筛选核心文化基因(1)/自然基地基因/地质土壤基因/土壤条件/村落土壤分析图.jpg"], "vids": [], "docs": []}, "平面形态": {"imgs": ["筛选核心文化基因(1)/物质空间基因/聚落整体形态基因/平面形态/黄鹿井村地形格局.jpg", "筛选核心文化基因(1)/物质空间基因/聚落整体形态基因/平面形态/黄鹿井村平面仿生形态.jpg", "筛选核心文化基因(1)/物质空间基因/聚落整体形态基因/平面形态/黄鹿井村落布局图.jpg"], "vids": [], "docs": []}, "空间拓扑": {"imgs": ["筛选核心文化基因(1)/物质空间基因/聚落整体形态基因/空间拓扑关系/黄鹿井村空间拓补结构图.png"], "vids": [], "docs": []}, "街巷格局": {"imgs": ["筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/建筑—地形—街道示意图.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/街巷剖面示意图.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/道路空间交叉示意图.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/黄鹿井村节点.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/黄鹿井村街巷材质.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/黄鹿井村街巷系统.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/街巷格局/黄鹿井村街巷高差.jpg"], "vids": [], "docs": []}, "街巷尺度材质": {"imgs": ["筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/D12视域大图.png", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/D12视域解释图1.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/D12视域解释图2.jpg", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/地面材质.png", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/地面材质分布图.png", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/线路分布图.png", "筛选核心文化基因(1)/物质空间基因/街巷肌理基因/尺度等高值、走向、界面材质/视域图数据.jpg"], "vids": [], "docs": []}, "民居形制": {"imgs": ["筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/文举人故居空间拓扑图.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/文举人故居立剖面索引图.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/文举人故居视域图 东.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/文举人故居视域图 北.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/约长故居空间拓扑图.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/约长故居立剖面索引图.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/院落时间线黄鹿村影像.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/居民形制/黄鹿村院落类型线稿图.jpg"], "vids": [], "docs": []}, "建筑材料": {"imgs": ["筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑材料/材质与色彩分析表_文举人约长故居_v3_色块修正_材质色彩分析.jpg"], "vids": [], "docs": []}, "色彩谱系": {"imgs": ["筛选核心文化基因(1)/物质空间基因/建筑单元基因/色彩谱系/文举人故居建筑色彩提取图.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/色彩谱系/约长故居建筑色彩提取图.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/色彩谱系/黄鹿井村色彩分析.jpg"], "vids": [], "docs": []}, "建筑规制": {"imgs": ["筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_01.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_02.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_03.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_04.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_05.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_06.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_07.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_08.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16何传霞 孙佳乐 文举人故居立面图_09.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_01.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_02.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_03.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_04.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_05.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_06.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_07.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/D16杨紫轩约长 故居立面图_08.jpg", "筛选核心文化基因(1)/物质空间基因/建筑单元基因/建筑规制/视域图.jpg"], "vids": [], "docs": []}, "核心公共空间": {"imgs": ["筛选核心文化基因(1)/物质空间基因/节点空间基因/核心公共空间/公共空间.jpg", "筛选核心文化基因(1)/物质空间基因/节点空间基因/核心公共空间/核心空间分析.jpg"], "vids": [], "docs": []}, "景观节点": {"imgs": ["筛选核心文化基因(1)/物质空间基因/节点空间基因/景观节点/古树位置节点图.png", "筛选核心文化基因(1)/物质空间基因/节点空间基因/景观节点/故居位置总览图.png"], "vids": [], "docs": []}, "村域边界": {"imgs": ["筛选核心文化基因(1)/物质空间基因/边界空间基因/村域边界/发山、神象山、纱帽山标注分析图.jpg", "筛选核心文化基因(1)/物质空间基因/边界空间基因/村域边界/围子墙走向、高厚分析图.jpg", "筛选核心文化基因(1)/物质空间基因/边界空间基因/村域边界/域河流林带围子墙关系示意图.jpg"], "vids": [], "docs": []}, "灰空间": {"imgs": ["筛选核心文化基因(1)/物质空间基因/边界空间基因/灰空间、过渡地带/D20平面图.jpg", "筛选核心文化基因(1)/物质空间基因/边界空间基因/灰空间、过渡地带/D20行政区灰空间分布与形态分析图.jpg"], "vids": [], "docs": []}, "宗族谱系": {"imgs": [], "vids": ["筛选核心文化基因(1)/社会人文基因/宗族组织基因/宗族谱系、姓氏构成/视频1.mp4"], "docs": []}, "宗族治理": {"imgs": [], "vids": ["筛选核心文化基因(1)/社会人文基因/宗族组织基因/祠堂体系、宗族治理/视频2.mp4"], "docs": []}, "民间信仰": {"imgs": ["筛选核心文化基因(1)/社会人文基因/礼制信仰基因/民族信仰、庙宇祭祀/关帝庙.jpg"], "vids": [], "docs": []}, "风水择居": {"imgs": ["筛选核心文化基因(1)/社会人文基因/礼制信仰基因/风水理念、择居思想/风水分析图.jpg"], "vids": [], "docs": []}, "传统产业": {"imgs": ["筛选核心文化基因(1)/社会人文基因/生产生计基因/传统产业/D25＋附带图片/D25＋农耕作物分布图.jpg", "筛选核心文化基因(1)/社会人文基因/生产生计基因/传统产业/D25＋附带图片/D25＋手工业工业发展图.jpg"], "vids": [], "docs": []}, "土地利用": {"imgs": ["筛选核心文化基因(1)/社会人文基因/生产生计基因/土地利用模式、农田格局/土地利用模式图.jpg"], "vids": [], "docs": []}, "婚丧节庆": {"imgs": ["筛选核心文化基因(1)/社会人文基因/民俗口述基因/节庆仪式、婚丧习俗/丧葬 psd.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/节庆仪式、婚丧习俗/婚庆 .jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/节庆仪式、婚丧习俗/节日 .jpg"], "vids": [], "docs": []}, "传说方言": {"imgs": ["筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画1.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画2.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画3.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画4.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画5.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画6.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画7.jpg", "筛选核心文化基因(1)/社会人文基因/民俗口述基因/传统故事、方言/连环画8.jpg"], "vids": [], "docs": []}, "营造工艺": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/营造技艺基因/木作、石作、夯土等建筑工艺/一石百凿.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/木作、石作、夯土等建筑工艺/夯土墙.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/木作、石作、夯土等建筑工艺/干垒石墙.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/木作、石作、夯土等建筑工艺/梁柱榫卯.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/木作、石作、夯土等建筑工艺/石墙浆砌.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/木作、石作、夯土等建筑工艺/草顶工艺.jpg"], "vids": [], "docs": []}, "修缮传统": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/营造技艺基因/修缮、营建传统/地面修缮工艺.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/修缮、营建传统/墙面修缮工艺.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/修缮、营建传统/屋面修缮工艺.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/修缮、营建传统/木门窗修缮工艺.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/修缮、营建传统/石构件修缮工艺.jpg", "筛选核心文化基因(1)/技艺景观基因/营造技艺基因/修缮、营建传统/院落整治工艺.jpg"], "vids": [], "docs": []}, "雕刻纹样": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/文化符号基因/雕刻、彩绘、纹样符号/青州实地考察纹样原文档_Sheet1.jpg"], "vids": [], "docs": []}, "匾额碑刻": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/文化符号基因/匾额、碑刻、楹联/区位总览图.jpg", "筛选核心文化基因(1)/技艺景观基因/文化符号基因/匾额、碑刻、楹联/青州实地考察碑记匾额_Sheet1.jpg"], "vids": [], "docs": []}, "田园古树": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/乡土景观基因/田园景观、古树名木/D33田园景观 古木名树.jpg"], "vids": [], "docs": []}, "水利设施": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/乡土景观基因/水利设施/D34水利设施2.jpg"], "vids": [], "docs": []}, "传统手工艺": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/非遗载体基因/传统手工艺/传统煎饼制艺.png", "筛选核心文化基因(1)/技艺景观基因/非遗载体基因/传统手工艺/制作方法.jpg", "筛选核心文化基因(1)/技艺景观基因/非遗载体基因/传统手工艺/豆腐制艺.png", "筛选核心文化基因(1)/技艺景观基因/非遗载体基因/传统手工艺/铜锣队制艺.png"], "vids": [], "docs": []}, "活态非遗": {"imgs": ["筛选核心文化基因(1)/技艺景观基因/非遗载体基因/戏曲、歌舞等活态非遗/舞龙.png"], "vids": [], "docs": []}};
+var PREVIEWS = {};
+var GROUPS = [{"id": "g1", "label": "地形地貌", "x": 75, "y": 16, "keys": ["地貌类型", "等高关系"]}, {"id": "g2", "label": "水文水系", "x": 10, "y": 26, "keys": ["水源类型", "水系耦合"]}, {"id": "g3", "label": "气候植被", "x": 89, "y": 44, "keys": ["气候", "植被"]}, {"id": "g4", "label": "地质土壤", "x": 56, "y": 9, "keys": ["地层岩性", "土壤条件"]}, {"id": "g5", "label": "聚落形态", "x": 42, "y": 47, "keys": ["平面形态", "空间拓扑"]}, {"id": "g6", "label": "街巷肌理", "x": 27, "y": 63, "keys": ["街巷格局", "街巷尺度材质"]}, {"id": "g7", "label": "建筑单元", "x": 56, "y": 57, "keys": ["民居形制", "建筑材料", "色彩谱系", "建筑规制"]}, {"id": "g8", "label": "节点空间", "x": 44, "y": 82, "keys": ["核心公共空间", "景观节点"]}, {"id": "g9", "label": "边界空间", "x": 93, "y": 66, "keys": ["村域边界", "灰空间"]}, {"id": "g10", "label": "宗族组织", "x": 17, "y": 53, "keys": ["宗族谱系", "宗族治理"]}, {"id": "g11", "label": "礼制信仰", "x": 35, "y": 40, "keys": ["民间信仰", "风水择居"]}, {"id": "g12", "label": "生产生计", "x": 13, "y": 80, "keys": ["传统产业", "土地利用"]}, {"id": "g13", "label": "民俗口述", "x": 72, "y": 50, "keys": ["婚丧节庆", "传说方言"]}, {"id": "g14", "label": "营造技艺", "x": 49, "y": 71, "keys": ["营造工艺", "修缮传统"]}, {"id": "g15", "label": "文化符号", "x": 66, "y": 42, "keys": ["雕刻纹样", "匾额碑刻"]}, {"id": "g16", "label": "乡土景观", "x": 83, "y": 27, "keys": ["田园古树", "水利设施"]}, {"id": "g17", "label": "非遗载体", "x": 24, "y": 91, "keys": ["传统手工艺", "活态非遗"]}];
+var TITLES = {"地貌类型": "地貌类型：平原 / 河谷 / 丘陵 / 山地", "等高关系": "等高关系、坡度、台地特征", "水源类型": "水源类型：河 / 溪 / 泉 / 塘", "水系耦合": "水系格局与村落耦合关系", "气候": "气候：温度、风向", "植被": "植被：植物种类、主要农作物", "地层岩性": "地层岩性：岩石类型、地下水情况", "土壤条件": "土壤条件（土地利用格局）、乡土材料", "平面形态": "平面形态（仿生形态）：团块 / 带状 / 组团 / 散点 / 梳式", "空间拓扑": "空间拓扑关系", "街巷格局": "街巷格局：格网 / 鱼骨 / 自由曲折", "街巷尺度材质": "尺度 D/H、走向、界面材质", "民居形制": "民居形制：院落类型、开间（平面拓扑）", "建筑材料": "建筑材料", "色彩谱系": "色彩谱系", "建筑规制": "建筑规制：立面、屋顶形制（空间视域 D/H）", "核心公共空间": "核心公共空间：祠堂、广场、庙、村口、故居、记忆馆", "景观节点": "景观节点：古树、桥、门楼", "村域边界": "村域边界：山、河、围墙、林带", "灰空间": "灰空间、过渡地带", "宗族谱系": "宗族谱系、姓氏构成", "宗族治理": "祠堂体系、宗族治理", "民间信仰": "民间信仰、庙宇祭祀", "风水择居": "风水理念、择居思想", "传统产业": "传统产业：农耕 / 豆腐坊 / 油坊 / 酿酒 / 条编", "土地利用": "土地利用模式、农田格局", "婚丧节庆": "节庆仪式、婚丧习俗", "传说方言": "传说故事、方言、连环画", "营造工艺": "木作、石作、夯土等建造工艺", "修缮传统": "修缮、营建传统", "雕刻纹样": "雕刻、彩绘、纹样符号", "匾额碑刻": "匾额、碑刻、楹联", "田园古树": "田园景观、古树名木", "水利设施": "水利设施：堰 / 渠 / 坝", "传统手工艺": "传统手工艺", "活态非遗": "戏曲、歌舞等活态非遗"};
+var unlocked = [];
+var STORE_KEY = 'hlj_unlocked_v2';
+try{ unlocked = JSON.parse(localStorage.getItem(STORE_KEY)||'[]'); }catch(e){ unlocked=[]; }
+try{ localStorage.removeItem('hlj_unlocked'); }catch(e){}
+
+/* ---- 树形结构数据（与 GROUPS 对应） ---- */
+var TREE = [
+  {l2:"一、自然基底基因", groups:["g1","g2","g3","g4"]},
+  {l2:"二、物质空间基因", groups:["g5","g6","g7","g8","g9"]},
+  {l2:"三、社会人文基因", groups:["g10","g11","g12","g13"]},
+  {l2:"四、技艺景观基因", groups:["g14","g15","g16","g17"]}
+];
+var GROUP_MAP = {};
+GROUPS.forEach(function(g){ GROUP_MAP[g.id]=g; });
+
+/* ---- 渲染树形 ---- */
+var treeEl = document.getElementById('tree');
+var bid=0;
+TREE.forEach(function(l2){
+  bid++;
+  var g2=document.createElement('div');
+  g2.innerHTML='<div class="tree-level-2" data-branch="tb'+bid+'"><span class="tick">+</span><span>'+l2.l2+'</span></div>';
+  var br=document.createElement('div');br.className='branch-3';br.id='tb'+bid;
+  br.innerHTML='<div class="branch-inner"></div>';
+  var inner=br.querySelector('.branch-inner');
+  l2.groups.forEach(function(gid){
+    var g=GROUP_MAP[gid];
+    var g3b=document.createElement('div');g3b.className='tree-group';
+    var b3id='tb'+bid+'-'+gid;
+    g3b.innerHTML='<div class="tree-level-3" data-branch="'+b3id+'"><span class="tick3">+</span><span>'+g.label+'</span></div>';
+    var br4=document.createElement('div');br4.className='branch-4';br4.id=b3id;
+    br4.innerHTML='<div class="branch-inner"></div>';
+    g.keys.forEach(function(key){
+      var d=DATA[key]||{imgs:[],vids:[],docs:[]};
+      var n=(d.imgs||[]).length+(d.vids||[]).length+(d.docs||[]).length;
+      var leaf=document.createElement('div');
+      leaf.className='tree-level-4';leaf.setAttribute('data-key',key);
+      leaf.textContent=TITLES[key]||key;
+      if(n){var c=document.createElement('span');c.className='cnt';c.textContent=n;leaf.appendChild(c);}
+      br4.querySelector('.branch-inner').appendChild(leaf);
+    });
+    g3b.appendChild(br4);
+    inner.appendChild(g3b);
+  });
+  g2.appendChild(br);
+  treeEl.appendChild(g2);
+});
+
+/* ---- 渲染地图点位 ---- */
+var mapWrap=document.getElementById('mapWrap');
+GROUPS.forEach(function(g){
+  var p=document.createElement('button');
+  p.className='point';p.id='pt-'+g.id;p.setAttribute('data-gid',g.id);
+  p.style.left=g.x+'%';p.style.top=g.y+'%';
+  if(g.y>=78)p.classList.add('lb-up');
+  p.innerHTML='<span class="dot"></span><span class="label">'+g.label+'</span>';
+  p.addEventListener('click',function(e){
+    e.stopPropagation();
+    openPop(g,p);
+  });
+  mapWrap.appendChild(p);
+});
+
+/* ---- 点亮逻辑 ---- */
+function refreshProgress(){
+  var allKeys=[];
+  GROUPS.forEach(function(g){g.keys.forEach(function(k){allKeys.push(k);});});
+  var seen=allKeys.filter(function(k){return unlocked.indexOf(k)>=0;});
+  document.getElementById('unlockedCount').textContent=seen.length;
+  document.getElementById('totalCount').textContent=allKeys.length;
+  GROUPS.forEach(function(g){
+    var pt=document.getElementById('pt-'+g.id);
+    var seenIn=g.keys.filter(function(k){return unlocked.indexOf(k)>=0;}).length;
+    pt.classList.remove('unlocked','done');
+    if(seenIn===g.keys.length && g.keys.length>0) pt.classList.add('done');
+    else if(seenIn>0) pt.classList.add('unlocked');
+  });
+}
+function unlock(key){
+  if(unlocked.indexOf(key)<0){
+    unlocked.push(key);
+    try{localStorage.setItem(STORE_KEY,JSON.stringify(unlocked));}catch(e){}
+  }
+  refreshProgress();
+}
+
+/* ---- 点位浮层 ---- */
+var pop=document.getElementById('mapPop'),popTitle=document.getElementById('popTitle'),popList=document.getElementById('popList');
+function openPop(g,btn){
+  document.querySelectorAll('.point.active').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  popTitle.textContent=g.label;
+  popList.innerHTML='';
+  g.keys.forEach(function(key){
+    var d=DATA[key]||{imgs:[],vids:[],docs:[]};
+    var n=(d.imgs||[]).length+(d.vids||[]).length+(d.docs||[]).length;
+    var b=document.createElement('button');b.className='map-pop-item';b.type='button';
+    if(unlocked.indexOf(key)>=0)b.classList.add('seen');
+    b.innerHTML=TITLES[key]+' <span class="cnt">'+n+' 份</span>';
+    b.addEventListener('click',function(){
+      closePop();
+      openDrawer(key);
+    });
+    popList.appendChild(b);
+  });
+  pop.classList.add('show');
+  var pw=pop.offsetWidth,ph=pop.offsetHeight;
+  var px=g.x/100*mapWrap.clientWidth;
+  var py=g.y/100*mapWrap.clientHeight;
+  var x=px+22;
+  if(x+pw>mapWrap.clientWidth-8) x=px-pw-22;
+  if(x<8) x=8;
+  var y=py-ph/2;
+  if(y<8) y=8;
+  if(y+ph>mapWrap.clientHeight-8) y=mapWrap.clientHeight-ph-8;
+  pop.style.left=x+'px';pop.style.top=y+'px';
+}
+function closePop(){pop.classList.remove('show');document.querySelectorAll('.point.active').forEach(function(p){p.classList.remove('active');});}
+document.getElementById('popClose').addEventListener('click',closePop);
+mapWrap.addEventListener('click',function(e){if(!e.target.closest('.point'))closePop();});
+
+/* ---- 展开/收起 ---- */
+function toggle(el){
+  var id=el.getAttribute('data-branch'),br=document.getElementById(id);
+  if(!br)return;
+  var open=br.classList.toggle('open');
+  el.classList.toggle('open',open);
+  el.querySelector('.tick,.tick3').textContent=open?'−':'+';
+}
+document.querySelectorAll('.tree-level-2,.tree-level-3').forEach(function(el){
+  el.addEventListener('click',function(){toggle(el);});
+});
+document.getElementById('collapseAll').addEventListener('click',function(){
+  document.querySelectorAll('.branch-3.open,.branch-4.open').forEach(function(b){b.classList.remove('open');});
+  document.querySelectorAll('.tree-level-2,.tree-level-3').forEach(function(el){
+    el.classList.remove('open');el.querySelector('.tick,.tick3').textContent='+';
+  });
+});
+
+/* ---- 抽屉渲染 ---- */
+var drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay'),
+    drawerTitle=document.getElementById('drawerTitle'),drawerBody=document.getElementById('drawerBody');
+var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+var curImgs=[],curIdx=0;
+function fname(p){return decodeURIComponent(p.split('/').pop());}
+function extOf(p){return p.split('.').pop().toLowerCase();}
+function docCls(e){return e==='pdf'?'pdf':(e==='docx'||e==='doc')?'docx':(e==='xlsx'||e==='xls')?'xlsx':'other';}
+function docLbl(e){return e==='pdf'?'PDF':(e==='docx'||e==='doc')?'WORD':(e==='xlsx'||e==='xls')?'EXCEL':e.toUpperCase();}
+var toastTimer=null;
+function showToast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},4000);}
+
+function openDrawer(key){
+  var d=DATA[key]||{imgs:[],vids:[],docs:[]};
+  curImgs=d.imgs||[];
+  drawerTitle.textContent=TITLES[key]||key;
+  drawerBody.innerHTML='';
+  var n=(d.imgs||[]).length+(d.vids||[]).length+(d.docs||[]).length;
+  var c=document.createElement('div');c.className='drawer-count';
+  c.textContent='共 '+n+' 份资料（图 '+(d.imgs||[]).length+' · 视频 '+(d.vids||[]).length+' · 文档 '+(d.docs||[]).length+'）';
+  drawerBody.appendChild(c);
+  if(!n){drawerBody.innerHTML+='<div class="img-empty">该条目暂无资料</div>';}
+  if(d.imgs&&d.imgs.length){
+    var lb1=document.createElement('div');lb1.className='drawer-section-label';lb1.textContent='调研照片 / 图纸';drawerBody.appendChild(lb1);
+    var grid=document.createElement('div');grid.className='img-grid';
+    d.imgs.forEach(function(p,i){
+      var card=document.createElement('div');card.className='img-card';
+      var im=document.createElement('img');im.className='thumb';im.loading='lazy';im.src=p;im.alt=fname(p);
+      var fn=document.createElement('div');fn.className='fname';fn.textContent=fname(p);
+      card.appendChild(im);card.appendChild(fn);
+      card.addEventListener('click',function(){openLb(i);});
+      grid.appendChild(card);
+    });
+    drawerBody.appendChild(grid);
+  }
+  if(d.vids&&d.vids.length){
+    var lb2=document.createElement('div');lb2.className='drawer-section-label';lb2.textContent='影像资料';drawerBody.appendChild(lb2);
+    d.vids.forEach(function(p){
+      var card=document.createElement('div');card.className='vid-card';
+      var v=document.createElement('video');v.controls=true;v.preload='metadata';v.src=p;
+      var fn=document.createElement('div');fn.className='fname';fn.textContent=fname(p);
+      card.appendChild(v);card.appendChild(fn);drawerBody.appendChild(card);
+    });
+  }
+  if(d.docs&&d.docs.length){
+    var lb3=document.createElement('div');lb3.className='drawer-section-label';lb3.textContent='文档资料';drawerBody.appendChild(lb3);
+    d.docs.forEach(function(p){
+      var e=extOf(p),isPdf=e==='pdf';
+      var a=document.createElement('a');a.className='doc-card';a.href=p;
+      if(isPdf){a.target='_blank';a.rel='noopener';}
+      else{a.setAttribute('download','');a.addEventListener('click',function(){showToast('已开始下载「'+fname(p)+'」，下方已内嵌预览；如需原文件请在下载文件夹中查看。');});}
+      var badge=document.createElement('div');badge.className='doc-type '+docCls(e);badge.textContent=docLbl(e);
+      var w=document.createElement('div');
+      var nm=document.createElement('div');nm.className='doc-name';nm.textContent=fname(p);
+      var h=document.createElement('div');h.className='doc-hint';h.textContent=isPdf?'点击新窗口预览':'下方已内嵌预览';
+      w.appendChild(nm);w.appendChild(h);
+      a.appendChild(badge);a.appendChild(w);drawerBody.appendChild(a);
+      if(PREVIEWS[p]){
+        var pv=document.createElement('div');pv.className='doc-preview';pv.innerHTML=PREVIEWS[p];
+        drawerBody.appendChild(pv);
+      }
+    });
+  }
+  drawer.classList.add('open');overlay.classList.add('show');
+  unlock(key);
+}
+document.querySelectorAll('.tree-level-4').forEach(function(el){
+  el.addEventListener('click',function(){openDrawer(el.getAttribute('data-key'));});
+});
+/* 事件委托：树形是动态渲染的，重新绑定 */
+treeEl.addEventListener('click',function(e){
+  var leaf=e.target.closest('.tree-level-4');
+  if(leaf) openDrawer(leaf.getAttribute('data-key'));
+});
+
+function openLb(i){curImgs=curImgs||[];if(!curImgs.length)return;curIdx=i;lbImg.src=curImgs[i];lbCap.textContent=(i+1)+' / '+curImgs.length+' '+fname(curImgs[i]);lb.classList.add('open');}
+function closeLb(){lb.classList.remove('open');lbImg.src='';}
+document.getElementById('lbClose').addEventListener('click',closeLb);
+document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();openLb((curIdx-1+curImgs.length)%curImgs.length);});
+document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();openLb((curIdx+1)%curImgs.length);});
+lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
+function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('show');closeLb();}
+document.getElementById('drawerClose').addEventListener('click',closeDrawer);
+overlay.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeDrawer();closePop();closeLb();}
+  if(lb.classList.contains('open')){
+    if(e.key==='ArrowLeft')document.getElementById('lbPrev').click();
+    if(e.key==='ArrowRight')document.getElementById('lbNext').click();
+  }
+});
+
+/* 重置探索进度 */
+document.getElementById('resetProgress').addEventListener('click',function(){
+  unlocked=[];
+  try{localStorage.removeItem(STORE_KEY);}catch(e){}
+  closePop();
+  refreshProgress();
+  showToast('探索进度已重置，36 个条目回到未解锁状态。');
+});
+
+/* 初始化 */
+refreshProgress();
+</script>
+</body>
+</html>
