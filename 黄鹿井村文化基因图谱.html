@@ -38,6 +38,14 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
 /* 已移除循环阴影动画：每帧重绘 box-shadow，是持续耗电/掉帧的来源 */
 .cover-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(244,240,231,.55);font-size:.7rem;letter-spacing:.4em;font-family:var(--sans);opacity:0;animation:rise 1s 2.4s forwards;z-index:3}
 
+/* ===== 基因体系总览（分类树） ===== */
+.overview-section{max-width:1180px;margin:0 auto;padding:4rem 1.5rem 3rem}
+.overview-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:1rem;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}
+.overview-head h2{font-size:1.3rem;font-weight:600;letter-spacing:.08em}
+.overview-head small{font-family:var(--sans);font-size:.75rem;color:var(--muted);letter-spacing:.1em}
+.overview-img{border:1px solid var(--line);box-shadow:0 4px 16px rgba(47,59,58,.10);background:#e8e2d4;cursor:zoom-in}
+.overview-img img{display:block;width:100%;height:auto}
+
 /* ===== 地图导航区 ===== */
 .map-section{position:relative;min-height:100vh;background:var(--paper);padding:4rem 1.5rem 5rem}
 .map-progress{max-width:1100px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
@@ -167,9 +175,20 @@ body{font-family:var(--serif);background:var(--paper);color:var(--ink);line-heig
     <div class="cover-kicker">TRADITIONAL VILLAGE · CULTURAL GENE</div>
     <h1 class="cover-title">青州黄鹿井村<br>传统村落文化基因图谱</h1>
     <p class="cover-sub">山地古村落空间与乡土文化数字档案</p>
-    <a class="cover-enter" href="#map">进入图谱</a>
+    <a class="cover-enter" href="#overview">进入图谱</a>
   </div>
   <div class="cover-hint">向下探索 · EXPLORE</div>
+</section>
+
+<!-- ===== 基因体系总览（分类树） ===== -->
+<section class="overview-section" id="overview">
+  <div class="overview-head">
+    <h2>文化基因分类总览</h2>
+    <small>目标层 A · 准则层 B · 要素层 C · 方案层 D</small>
+  </div>
+  <figure class="overview-img" id="overviewImg">
+    <img src="assets/gene-tree.png" alt="黄鹿井村文化基因分类树状图" loading="lazy" decoding="async">
+  </figure>
 </section>
 
 <!-- ===== 地图导航 ===== -->
@@ -445,6 +464,7 @@ document.getElementById('lbClose').addEventListener('click',closeLb);
 document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();openLb((curIdx-1+curImgs.length)%curImgs.length);});
 document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();openLb((curIdx+1)%curImgs.length);});
 lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
+document.getElementById('overviewImg').addEventListener('click',function(){curImgs=['assets/gene-tree.png'];curIdx=0;openLb(0);});
 function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('show');closeLb();}
 document.getElementById('drawerClose').addEventListener('click',closeDrawer);
 overlay.addEventListener('click',closeDrawer);
